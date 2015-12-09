@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 分布式锁
@@ -83,6 +84,17 @@ public class DistributedDispatcher {
         countDownLatch.await();
     }
 
+    /**
+     * 获取分布式环境中的Master权限
+     * @param timeout
+     * @param timeUnit
+     * @throws InterruptedException
+     * 在同一个TOPIC中，只有一个DistributedDispatcher实例会成为MASTER，如果当前实例未被选举为Master，<br/>
+     * 该方法将会堵塞，直至当前实例被选举为Master
+     */
+    public void waitMasterPerm(long timeout,TimeUnit timeUnit) throws InterruptedException{
+        countDownLatch.await(timeout,timeUnit);
+    }
 
     /**
      * 释放Master控制权限

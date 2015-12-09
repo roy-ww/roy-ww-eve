@@ -2,6 +2,7 @@ package com.royww.op.eve.conf;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -64,6 +65,9 @@ public class PropertiesReader {
                     final Map<String, String> kvs = Maps.newHashMap();
 
                     public boolean processLine(String s) throws IOException {
+                        if(Strings.isNullOrEmpty(s)||s.startsWith("#")){
+                            return true;
+                        }
                         int equalsIdx = s.indexOf("=");
                         if (equalsIdx < 0) {
                             kvs.put(s.trim(), null);
