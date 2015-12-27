@@ -92,8 +92,8 @@ public class DistributedDispatcher {
      * 在同一个TOPIC中，只有一个DistributedDispatcher实例会成为MASTER，如果当前实例未被选举为Master，<br/>
      * 该方法将会堵塞，直至当前实例被选举为Master
      */
-    public void waitMasterPerm(long timeout,TimeUnit timeUnit) throws InterruptedException{
-        countDownLatch.await(timeout,timeUnit);
+    public boolean waitMasterPerm(long timeout,TimeUnit timeUnit) throws InterruptedException{
+        return countDownLatch.await(timeout,timeUnit);
     }
 
     /**
